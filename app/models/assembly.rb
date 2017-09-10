@@ -7,4 +7,6 @@ class Assembly < ActiveRecord::Base
 
   has_many :assembly_parts
   has_many :parts, through: :assembly_parts
+
+  has_one :id_tag, as: :id_taggable
 end

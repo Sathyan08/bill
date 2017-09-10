@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170910160350) do
+ActiveRecord::Schema.define(version: 20170910163154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 20170910160350) do
     t.index ["assembly_id", "sub_assembly_id"], name: "index_assembly_relationships_on_assembly_id_and_sub_assembly_id", unique: true
     t.index ["assembly_id"], name: "index_assembly_relationships_on_assembly_id"
     t.index ["sub_assembly_id"], name: "index_assembly_relationships_on_sub_assembly_id"
+  end
+
+  create_table "id_tags", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.string "id_taggable_type"
+    t.bigint "id_taggable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id_taggable_id", "id_taggable_type"], name: "index_id_tags_on_id_taggable_id_and_id_taggable_type"
+    t.index ["id_taggable_type", "id_taggable_id"], name: "index_id_tags_on_id_taggable_type_and_id_taggable_id"
+    t.index ["identifier"], name: "index_id_tags_on_identifier", unique: true
   end
 
   create_table "parts", force: :cascade do |t|
