@@ -10,19 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170910145050) do
+ActiveRecord::Schema.define(version: 20170910160350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "assemblies", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "assembly_parts", force: :cascade do |t|
+    t.bigint "assembly_id", null: false
+    t.bigint "part_id", null: false
+    t.integer "part_quantity", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assembly_id", "part_id"], name: "index_assembly_parts_on_assembly_id_and_part_id", unique: true
+    t.index ["assembly_id"], name: "index_assembly_parts_on_assembly_id"
+    t.index ["part_id"], name: "index_assembly_parts_on_part_id"
   end
 
   create_table "assembly_relationships", force: :cascade do |t|
     t.bigint "assembly_id"
     t.bigint "sub_assembly_id"
+    t.integer "sub_assembly_quantity", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assembly_id", "sub_assembly_id"], name: "index_assembly_relationships_on_assembly_id_and_sub_assembly_id", unique: true
@@ -30,6 +43,14 @@ ActiveRecord::Schema.define(version: 20170910145050) do
     t.index ["sub_assembly_id"], name: "index_assembly_relationships_on_sub_assembly_id"
   end
 
+  create_table "parts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "assembly_parts", "assemblies"
+  add_foreign_key "assembly_parts", "parts"
   add_foreign_key "assembly_relationships", "assemblies"
   add_foreign_key "assembly_relationships", "assemblies", column: "sub_assembly_id"
 end

@@ -3,6 +3,7 @@ class CreateAssemblyRelationships < ActiveRecord::Migration[5.1]
     create_table :assembly_relationships do |t|
       t.references :assembly, index: true, foreign_key: true
       t.references :sub_assembly, index: true
+      t.integer :sub_assembly_quantity, default: 1, null: false
 
       t.timestamps
     end
