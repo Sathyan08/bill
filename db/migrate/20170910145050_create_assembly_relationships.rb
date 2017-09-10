@@ -8,5 +8,6 @@ class CreateAssemblyRelationships < ActiveRecord::Migration[5.1]
     end
 
     add_foreign_key :assembly_relationships, :assemblies, column: :sub_assembly_id
+    add_index :assembly_relationships, [:assembly_id, :sub_assembly_id], unique: true
   end
 end

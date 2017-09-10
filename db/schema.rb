@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170910145050) do
     t.bigint "sub_assembly_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assembly_id", "sub_assembly_id"], name: "index_assembly_relationships_on_assembly_id_and_sub_assembly_id", unique: true
     t.index ["assembly_id"], name: "index_assembly_relationships_on_assembly_id"
     t.index ["sub_assembly_id"], name: "index_assembly_relationships_on_sub_assembly_id"
   end
